@@ -9,6 +9,7 @@ on:
 env:
    REGISTRY: dockermanjeet
    APP: app
+   TAG: github.sha
 jobs:
   Build:
     runs-on: ubuntu-latest
@@ -57,15 +58,15 @@ jobs:
       with:
         context: .
         load: true
-        tags: ${{ env.REGISTRY }}/${{ env.APP }}:${{ github.sha }}
+        tags: ${{ env.REGISTRY }}/${{ env.APP }}:${{ env.TAG }}
 
     - name: Test the container
       run: |
-        docker run -dit --rm -p 80:8080 ${{ env.REGISTRY }}/${{ env.APP }}:${{ github.sha }};
+        docker run -dit --rm -p 80:8080 ${{ env.REGISTRY }}/${{ env.APP }}:${{ env.TAG }};
 
     - name: Push images
       uses: docker/build-push-action@v4
       with:
         context: .
         push: true
-        tags: ${{ env.REGISTRY }}/${{ env.APP }}:${{ github.sha }}
+        tags: ${{ env.REGISTRY }}/${{ env.APP }}:${{ env.TAG }}
