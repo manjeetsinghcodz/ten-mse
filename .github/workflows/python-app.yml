@@ -10,6 +10,7 @@ on:
     branches: [ "develop" ]
 env:
    REGISTRY: dockermanjeet
+   APP: app
 jobs:
   buildCode:
     runs-on: ubuntu-latest
@@ -52,11 +53,11 @@ jobs:
       with:
         context: .
         load: true
-        tags: ${{ env.REGISTRY }}/${{ github.repository }}:${{ github.sha }}
+        tags: ${{ env.REGISTRY }}/${{ env.APP }}:${{ github.sha }}
 
     - name: Test the container
       run: |
-        docker run -dit --rm -p 80:8080 ${{ env.REGISTRY }}/${{ github.repository }}:${{ github.sha }};
+        docker run -dit --rm -p 80:8080 ${{ env.REGISTRY }}/${{ env.APP }}:${{ github.sha }};
         sleep 5 
 
     - name: Push images
@@ -65,4 +66,4 @@ jobs:
         context: .
         #platforms: linux/amd64,linux/arm64
         push: true
-        tags: ${{ env.REGISTRY }}/${{ github.repository }}:${{ github.sha }}
+        tags: ${{ env.REGISTRY }}/${{ env.APP }}:${{ github.sha }}
