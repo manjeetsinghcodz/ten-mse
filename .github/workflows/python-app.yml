@@ -9,7 +9,7 @@ on:
   pull_request:
     branches: [ "develop" ]
 env:
-   REGISTRY: docker.io
+   REGISTRY: dockermanjeet
 jobs:
   buildCode:
     runs-on: ubuntu-latest
