@@ -58,11 +58,11 @@ jobs:
       with:
         context: .
         load: true
-        tags: ${{ env.REGISTRY }}/${{ env.APP }}:${{ env.TAG }}
+        tags: ${{ env.REGISTRY }}/${{ env.APP }}:12345
 
     - name: Test the running container replying /
       run: |
-        docker run -dit --rm -p 80:8080 ${{ env.REGISTRY }}/${{ env.APP }}:${{ env.TAG }}
+        docker run -dit --rm -p 80:8080 ${{ env.REGISTRY }}/${{ env.APP }}:12345
         sleep 3s
         if [ "$(curl -sb -H "Accept: application/json" "http://127.0.0.1/health_check")" != "OK" ]; then echo "Container KO !"; exit 1; fi
       shell: bash
@@ -71,4 +71,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ env.REGISTRY }}/${{ env.APP }}:${{ env.TAG }}
+        tags: ${{ env.REGISTRY }}/${{ env.APP }}:12345
