@@ -33,7 +33,7 @@ jobs:
       run: |
         export PYTHONPATH=app
         pytest
-jobs:
+        
   docker:
     runs-on: ubuntu:latest
     steps:
