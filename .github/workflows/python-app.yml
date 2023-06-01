@@ -9,7 +9,7 @@ on:
 env:
    REGISTRY: dockermanjeet
    APP: app
-   TAG: latest
+   TAG: latest.app
 jobs:
   Build:
     runs-on: ubuntu-latest
