@@ -1,13 +1,11 @@
 ### Initial Continuous integration.
 ### Checkout the code into ubuntu node, install the necessary packages required by python, and perform the test with pytest
 
-name: Python application
+name: Flask App Deployment
 
 on:
   push:
     branches: [ "develop" ]
-    tags:
-      - 'v*.*.*'
 env:
    REGISTRY: dockermanjeet
    APP: app
@@ -18,28 +16,30 @@ jobs:
     steps:
     - name: Checkout Codes
       uses: actions/checkout@v3
-    - name: Set env
-      run: |
-       echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
         python-version: "3.10"
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
     - name: Test with pytest
       run: |
         export PYTHONPATH=app
         pytest
+
     - name: Setup QEMU
       uses: docker/setup-qemu-action@v2
 
@@ -57,16 +57,15 @@ jobs:
       with:
         context: .
         load: true
-        tags: ${{ env.REGISTRY }}/${{ env.APP }}:${{ env.RELEASE_VERSION }}
+        tags: ${{ env.REGISTRY }}/${{ env.APP }}:latest
 
     - name: Test the container
       run: |
-        docker run -dit --rm -p 80:8080 ${{ env.REGISTRY }}/${{ env.APP }}:${{ env.RELEASE_VERSION }};
-        sleep 5 
+        docker run -dit --rm -p 80:8080 ${{ env.REGISTRY }}/${{ env.APP }}:latest;
 
     - name: Push images
       uses: docker/build-push-action@v4
       with:
         context: .
         push: true
-        tags: ${{ env.REGISTRY }}/${{ env.APP }}:${{ env.RELEASE_VERSION }}
+        tags: ${{ env.REGISTRY }}/${{ env.APP }}:latest

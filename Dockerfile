@@ -6,7 +6,6 @@ RUN apk update && \
 WORKDIR /flask
 COPY ./requirements.txt /flask/requirements.txt
 COPY ./app /flask
-COPY ./tests /flask
 RUN pip install -r requirements.txt
 EXPOSE 8080
 
