@@ -35,7 +35,6 @@ jobs:
         pytest
 
   docker:
-    runs-on: ubuntu:latest
     steps:
       -
         name: Checkout Code
