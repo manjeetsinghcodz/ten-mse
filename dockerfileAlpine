@@ -3,11 +3,11 @@ FROM alpine:latest
 RUN apk update && \
     apk add python3 py3-pip -y --no-cache
 
-WORKDIR /app
-COPY ./requirements.txt /app/requirements.txt
-COPY ./delete.py /app
+WORKDIR /flask
+COPY ./requirements.txt /flask/requirements.txt
+COPY ./app /flask
+COPY ./tests /flask
 RUN pip install -r requirements.txt
-
 EXPOSE 8080
 
-CMD [ "python", "./delete.py" ]
+CMD [ "python", "app.py" ]
