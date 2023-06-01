@@ -66,9 +66,9 @@ jobs:
         sleep 3s
         if [ "$(curl -sb -H "Accept: application/json" "http://127.0.0.1/health_check")" != "KO" ]; then echo "Container KO !"; exit 1; fi
       shell: bash
-  #  - name: Push images
-  #    uses: docker/build-push-action@v4
-  #    with:
-  #      context: .
-  #      push: true
-  #      tags: ${{ env.REGISTRY }}/${{ env.APP }}:${{ env.TAG }}
+    - name: Push images
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.APP }}:${{ env.TAG }}
