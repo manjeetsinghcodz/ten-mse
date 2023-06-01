@@ -1,0 +1,8 @@
+###Ignore the files below
+app.py
+db.py
+games.sqlite
+__pycache__
+request.py
+sqlite.py
+.idea
