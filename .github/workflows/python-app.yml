@@ -63,7 +63,7 @@ jobs:
     - name: Test the running container replying /
       run: |
         docker run -dit --rm -p 80:8080 ${{ env.REGISTRY }}/${{ env.APP }}:${{ env.TAG }}
-        curl http://0.0.0.0/health_check
+        curl -X GET 0.0.0.0/health_check
   #  - name: Push images
   #    uses: docker/build-push-action@v4
   #    with:
