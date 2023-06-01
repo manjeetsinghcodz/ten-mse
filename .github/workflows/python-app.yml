@@ -9,7 +9,7 @@ on:
   pull_request:
     branches: [ "develop" ]
 jobs:
-  build_python:
+  buildCode:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,10 +34,9 @@ jobs:
         export PYTHONPATH=app
         pytest
 
-  docker:
+  buildDockerImage:
     runs-on: ubuntu-latest
-    needs: build_python
+    needs: buildCode
     steps:
-      - uses: actions/checkout@v3
       - name: Build docker image
-        run: docker build -t app:latest
+        run: docker build -t app:latest .
