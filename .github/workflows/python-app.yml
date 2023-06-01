@@ -9,7 +9,7 @@ on:
 env:
    REGISTRY: dockermanjeet
    APP: app
-   TAG: github.sha
+   TAG: latest #github.sha
 jobs:
   Build:
     runs-on: ubuntu-latest
