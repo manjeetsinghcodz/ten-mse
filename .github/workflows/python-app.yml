@@ -63,7 +63,6 @@ jobs:
     - name: Test the running container replying /
       run: |
         docker run -dit --rm -p 80:8080 ${{ env.REGISTRY }}/${{ env.APP }}:${{ env.TAG }}
-        #if [ "$(curl -sb -H "Accept: application/json" "http://127.0.0.1")" != "Hello, world!" ]; then echo "Container KO !"; exit 1; fi
         curl -sb -H "Accept: application/json" "http://127.0.0.1"
     - name: Push images
       uses: docker/build-push-action@v4
