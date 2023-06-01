@@ -63,7 +63,7 @@ jobs:
     - name: Test the container
       run: |
         docker run -dit --rm -p 80:8080 ${{ env.REGISTRY }}/${{ env.APP }}:${{ env.TAG }}
-        response=$(curl -sb -H "Accept: application/json" "http://127.0.0.1
+        response=$(curl -sb -H "Accept: application/json" "http://127.0.0.1")
         
 
     #- name: Push images
