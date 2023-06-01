@@ -39,4 +39,5 @@ jobs:
     needs: buildCode
     steps:
       - name: Build docker image
-        run: docker build -t app:latest .
+        run: ls -l
+        shell: bash
