@@ -33,11 +33,5 @@ jobs:
       run: |
         export PYTHONPATH=app
         pytest
-
-  buildDockerImage:
-    runs-on: ubuntu-latest
-    needs: buildCode
-    steps:
-      - name: Build docker image
-        run: ls -l
-        shell: bash
+    - name: Build docker Image
+      run: docker build -t app:latest .
