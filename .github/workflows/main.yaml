@@ -71,9 +71,7 @@ jobs:
     - name: Login to AWS ECR
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Push image to ECR
-      uses: docker/build-push-action@v4
-      with:
-        context: .
-        push: true
-        tags: ${{ env.REGISTRY }}/${{ env.APP }}:latest
+    - name: Push Image to ECR
+      run: |
+        docker build -t ${{ env.REGISTRY }}/${{ env.APP }}:latest .
+        docker push ${{ env.REGISTRY }}/${{ env.APP }}:latest
