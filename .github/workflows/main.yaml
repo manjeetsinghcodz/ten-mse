@@ -41,7 +41,6 @@ jobs:
     - name: Push Image to ECR
       uses: docker/build-push-action@v4
       with:
-        context: .
         push: true
         tags: ${{ env.REGISTRY}}/${{ env.REPO }}:${{ env.TAG }}
       #run: |
