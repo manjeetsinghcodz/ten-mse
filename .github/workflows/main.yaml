@@ -41,7 +41,6 @@ jobs:
         export PYTHONPATH=app
         pytest
 
-    steps:
     - name: Setup QEMU
       uses: docker/setup-qemu-action@v2
 
@@ -61,8 +60,7 @@ jobs:
         sleep 3s
         if [ "$(curl -sb -H "Accept: application/json" "http://127.0.0.1/health_check")" != "OK" ]; then echo "Container KO !"; exit 1; fi
       shell: bash
-
-    steps:
+      
     - name: Configure AWS ECR Credential
       uses: aws-actions/configure-aws-credentials@v1
       with:
