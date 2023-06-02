@@ -28,6 +28,13 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-southeast-2
 
+    - name: Build the docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        load: true
+        tags: ${{ env.REGISTRY}}/${{ env.REPO }}:${{ env.TAG }}
+
     - name: Login to AWS ECR
       uses: aws-actions/amazon-ecr-login@v1
 
