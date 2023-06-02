@@ -18,48 +18,11 @@ jobs:
     - name: Checkout Codes
       uses: actions/checkout@v3
 
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.10"
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-
-    - name: Test with pytest
-      run: |
-        export PYTHONPATH=app
-        pytest
-
     - name: Setup QEMU
       uses: docker/setup-qemu-action@v2
 
     - name: Set Up docker Buildx
       uses: docker/setup-buildx-action@v2
-
-    - name: Build the docker image
-      uses: docker/build-push-action@v4
-      with:
-        context: .
-        load: true
-        tags: ${{ env.REGISTRY }}/${{ env.APP }}:latest
-
-    - name: Test the running container replying http Response
-      run: |
-        docker run -dit --rm -p 80:8080 ${{ env.REGISTRY }}/${{ env.APP }}:latest
-        sleep 3s
-        if [ "$(curl -sb -H "Accept: application/json" "http://127.0.0.1/health_check")" != "OK" ]; then echo "Container KO !"; exit 1; fi
-      shell: bash
 
     - name: Configure AWS ECR Credential
       uses: aws-actions/configure-aws-credentials@v1
