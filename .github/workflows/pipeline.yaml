@@ -9,7 +9,7 @@ on:
 env:
    REGISTRY: 976201004822.dkr.ecr.ap-southeast-2.amazonaws.com
    REPO: ten-mse
-   TAG: tag-${{ github.run_number }}
+   TAG: v${{ github.run_number }}
 jobs:
   BUILD:
     runs-on: ubuntu-latest
