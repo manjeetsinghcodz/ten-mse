@@ -5,3 +5,4 @@ __pycache__
 request.py
 sqlite.py
 .idea
+.github/workflows/python-app.yaml

@@ -15,9 +15,9 @@ games_list = [
     }
 ]
 
-@app.route('/')
+@app.route('/health_check')
 def index():
-    return "Hello, world!"
+    return "OK"
 
 @app.route('/games', methods=['GET', 'POST'])
 def games():
