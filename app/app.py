@@ -67,5 +67,5 @@ def single_game(id):
 def handler(event, context):
     return serverless_wsgi.handle_request(app, event, context)
 
-#if __name__ == '__main__':
-#    app.run(debug='True', host='0.0.0.0', port='8080')
+if __name__ == '__main__':
+    app.run(debug='True', host='0.0.0.0', port='8080')
