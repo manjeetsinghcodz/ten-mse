@@ -1,3 +1,4 @@
+import serverless_wsgi
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
@@ -63,5 +64,8 @@ def single_game(id):
                 games_list.pop(index)
                 return jsonify(games_list)
 
-if __name__ == '__main__':
-    app.run(debug='True', host='0.0.0.0', port='8080')
+def handler(event, context):
+    return serverless_wsgi.handle_request(app, event, context)
+
+#if __name__ == '__main__':
+#    app.run(debug='True', host='0.0.0.0', port='8080')
