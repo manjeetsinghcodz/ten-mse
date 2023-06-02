@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 RUN apk update && \
-    apk add python3 py3-pip -y --no-cache
+    apk add python3 py3-pip --no-cache
 
 WORKDIR /flask
 COPY ./requirements.txt /flask/requirements.txt
