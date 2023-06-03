@@ -16,11 +16,11 @@ games_list = [
     }
 ]
 
-@app.route('/health_check')
+@app.route("/health_check")
 def index():
     return "OK"
 
-@app.route('/games', methods=['GET', 'POST'])
+@app.route("/games", methods=['GET', 'POST'])
 def games():
     if request.method == 'GET':
         if len(games_list) > 0:
@@ -40,7 +40,7 @@ def games():
         }
         games_list.append(new_objects)
         return jsonify(games_list), 201
-@app.route('/games/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+@app.route("/games/<int:id>", methods=['GET', 'PUT', 'DELETE'])
 def single_game(id):
     if request.method == 'GET':
         for game in games_list:
@@ -63,9 +63,8 @@ def single_game(id):
             if game['id'] == id:
                 games_list.pop(index)
                 return jsonify(games_list)
-
 def handler(event, context):
     return serverless_wsgi.handle_request(app, event, context)
 
-if __name__ == '__main__':
-    app.run(debug='True', host='0.0.0.0', port='8080')
+#if __name__ == '__main__':
+#    app.run()
