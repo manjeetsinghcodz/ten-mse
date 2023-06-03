@@ -57,12 +57,11 @@ jobs:
       run: |
         docker build -t ${{ env.REGISTRY}}/${{ env.REPO }}:${{ env.TAG }} .
 
-    - name: Test Running Container
+    - name: Post Event Test on Running Container
       run: |
         docker run -dit --rm -p 80:8080 ${{ env.REGISTRY}}/${{ env.REPO }}:${{ env.TAG }}
         sleep 2s
         if [ $(curl -s -o /dev/null -w "%{http_code}" -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{}') -ne 300 ]; then echo "Container KO !"; exit 1; fi
-        #if [ "$(curl -sb -H "Accept: application/json" "http://127.0.0.1/health_check")" != "OK" ]; then echo "Container KO !"; exit 1; fi
 
     - name: Login to ECR
       uses: aws-actions/amazon-ecr-login@v1
