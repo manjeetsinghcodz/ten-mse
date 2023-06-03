@@ -1,12 +1,7 @@
-FROM alpine:latest
+FROM public.ecr.aws/lambda/python:3.10
 
-RUN apk update && \
-    apk add python3 py3-pip --no-cache
+COPY ./app/app.py ${LAMBDA_TASK_ROOT}
+COPY requirements.txt  .
+RUN pip3 install -r requirements.txt --target "${LAMBDA_TASK_ROOT}"
 
-WORKDIR /flask
-COPY ./requirements.txt /flask/requirements.txt
-COPY ./app /flask
-RUN pip install -r requirements.txt
-EXPOSE 8080
-
-CMD [ "python", "app.py" ]
+CMD ["app.handler"]
