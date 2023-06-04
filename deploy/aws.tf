@@ -4,7 +4,7 @@ data "aws_ecr_repository" "ten_mse_ecr_repo" {
 
 resource "aws_lambda_function" "ten_mse_function" {
   function_name = "ten-mse"
-  image_uri = "976201004822.dkr.ecr.ap-southeast-2.amazonaws.com/ten-mse:${var.tag}"
+  image_uri = "976201004822.dkr.ecr.ap-southeast-2.amazonaws.com/ten-mse:${var.img_tag}"
   package_type = "Image"
   role = aws_iam_role.ten_mse_function_role.arn
 }
