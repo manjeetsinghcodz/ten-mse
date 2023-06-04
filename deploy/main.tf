@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "aws" {
+  shared_credentials_files = [".credentials"]
   region = "ap-southeast-2"
-  access_key = "AKIA6GSQ5G4LKQS3C3G5"
-  secret_key = "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"
+  profile = "default"
 }
