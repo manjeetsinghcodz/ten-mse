@@ -85,8 +85,6 @@ jobs:
       uses: actions/checkout@v3
 
      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration.
-    #- name: Setup Terraform
-    #  uses: hashicorp/setup-terraform@v1
     - name: Install Terraform
       run: |
         wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
@@ -96,32 +94,31 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       working-directory: ./deploy
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #env:
+      #  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
         export AWS_SECRET_ACCESS_KEY=${{ secrets.TF_KEY }}
         export AWS_ACCESS_KEY_ID=${{ secrets.TF_ID }}
         export AWS_PROFILE=default
-        terraform init -input=false
+        terraform init
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       working-directory: ./deploy
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #env:
+      #  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
         export tag=${{ env.TAG }}
-        terraform plan -input=false -var "tag=$(tag)"
+        terraform plan -var "tag=$(tag)"
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
       working-directory: ./deploy
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #env:
+      #  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
-        terraform apply -auto-approve -input=false -var "tag=$(tag)"
-
+        terraform apply -auto-approve -var "tag=$(tag)"
