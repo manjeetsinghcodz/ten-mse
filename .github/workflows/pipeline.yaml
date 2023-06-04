@@ -70,10 +70,9 @@ jobs:
       run: |
         docker push ${{ env.REGISTRY}}/${{ env.REPO }}:${{ env.TAG }}
 
-jobs:
   DEPLOY:
     runs-on: ubuntu-latest
-    environment: production
+    needs: BUILD
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
