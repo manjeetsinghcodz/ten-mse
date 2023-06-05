@@ -8,6 +8,7 @@ terraform {
   }
 }
 
+###AWS provider credentials are configure in runner node env variable due to security reason
 provider "aws" {
   region = "ap-southeast-2"
 }
