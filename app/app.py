@@ -1,8 +1,16 @@
 import serverless_wsgi ##Load module serverless for the lambda
 from flask import Flask, request, jsonify ##Load flask module for web base app
+import logging
+from time import strftime
+
+LOGGER = logging.getLogger(__name__)
+LOGGER.setLevel(logging.DEBUG)
+console_handler = logging.StreamHandler()
+LOGGER.addHandler(console_handler)
 
 app = Flask(__name__)
 
+#list of key value to be queried
 games_list = [
     {
         "id": 0,
@@ -14,24 +22,36 @@ games_list = [
         "name": "San Andreas",
         "company": "Rockstar Games",
     }
-] #list of key value to be queried
+]
 
-@app.route("/health_check") #Flask routing to return OK when uri /health_check is requested
-def index(): # Defining a function to return Ok every time /health_check is requested
+
+"""Flask routing to return OK when uri /health_check is requested
+# Defining a function to return Ok every time /health_check is requested"""
+@app.route("/health_check")
+def index():
     return "OK"
 
-@app.route("/games", methods=['GET', 'POST'])  #defining on methods GET and POST on uri /games
-def games(): #defining a function when /games is requested
-    if request.method == 'GET': #if the request method is GET
-        if len(games_list) > 0: #If the length value of list games_list is greater than 0
-            return jsonify(games_list)  ## use module jsonify to return all the value of the game_list when /games is requested
-        else:
-            'No games found', 404 #return 404 if request methods is not GET and length is not > than 0
+"""defining on methods GET and POST on uri /games
+defining a function when /games is requested
+if the request method is GET
+If the length value of list games_list is greater than 0
+ use module jsonify to return all the value of the game_list when /games is requested
+return 404 if request methods is not GET and length is not > than 0
+if the request method is POST
+increment the id of the new post value"""
 
-    if request.method == 'POST': #if the request method is POST
+@app.route("/games", methods=['GET', 'POST'])
+def games():
+    if request.method == 'GET':
+        if len(games_list) > 0:
+            return jsonify(games_list)
+        else:
+            'No games found', 404
+
+    if request.method == 'POST':
         new_name = request.form['name']
         new_company = request.form['company']
-        ID = games_list [-1] ['id'] + 1 #increment the id of the new post value
+        ID = games_list [-1] ['id'] + 1
 
         new_objects = {
             'id': ID,
@@ -40,6 +60,7 @@ def games(): #defining a function when /games is requested
         }
         games_list.append(new_objects)
         return jsonify(games_list), 201
+
 @app.route("/games/<int:id>", methods=['GET', 'PUT', 'DELETE'])
 def single_game(id):
     if request.method == 'GET':
@@ -63,5 +84,14 @@ def single_game(id):
             if game['id'] == id:
                 games_list.pop(index)
                 return jsonify(games_list)
-def handler(event, context): ## Define function handler for the lambda to trigger on event
-    return serverless_wsgi.handle_request(app, event, context) ##module serverless_wsgi is loaded to handle the request on events triggering function
+
+@app.after_request
+def after_request(response):
+   timestamp = strftime('[%Y-%b-%d %H:%M]')
+   LOGGER.info('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
+   return response
+
+"""Define function handler for the lambda to trigger on event
+##module serverless_wsgi is loaded to handle the request on events triggering function"""
+def handler(event, context):
+    return serverless_wsgi.handle_request(app, event, context)
