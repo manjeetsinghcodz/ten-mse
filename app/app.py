@@ -1,5 +1,5 @@
-import serverless_wsgi
-from flask import Flask, request, jsonify
+import serverless_wsgi ##Load module serverless for the lambda
+from flask import Flask, request, jsonify ##Load flask module for web base app
 
 app = Flask(__name__)
 
@@ -14,24 +14,24 @@ games_list = [
         "name": "San Andreas",
         "company": "Rockstar Games",
     }
-]
+] #list of key value to be queried
 
-@app.route("/health_check")
-def index():
+@app.route("/health_check") #Flask routing to return OK when uri /health_check is requested
+def index(): # Defining a function to return Ok every time /health_check is requested
     return "OK"
 
-@app.route("/games", methods=['GET', 'POST'])
-def games():
-    if request.method == 'GET':
-        if len(games_list) > 0:
-            return jsonify(games_list)
+@app.route("/games", methods=['GET', 'POST'])  #defining on methods GET and POST on uri /games
+def games(): #defining a function when /games is requested
+    if request.method == 'GET': #if the request method is GET
+        if len(games_list) > 0: #If the length value of list games_list is greater than 0
+            return jsonify(games_list)  ## use module jsonify to return all the value of the game_list when /games is requested
         else:
-            'No games found', 404
+            'No games found', 404 #return 404 if request methods is not GET and length is not > than 0
 
-    if request.method == 'POST':
+    if request.method == 'POST': #if the request method is POST
         new_name = request.form['name']
         new_company = request.form['company']
-        ID = games_list [-1] ['id'] + 1
+        ID = games_list [-1] ['id'] + 1 #increment the id of the new post value
 
         new_objects = {
             'id': ID,
@@ -63,8 +63,5 @@ def single_game(id):
             if game['id'] == id:
                 games_list.pop(index)
                 return jsonify(games_list)
-def handler(event, context):
-    return serverless_wsgi.handle_request(app, event, context)
-
-#if __name__ == '__main__':
-#    app.run()
+def handler(event, context): ## Define function handler for the lambda to trigger on event
+    return serverless_wsgi.handle_request(app, event, context) ##module serverless_wsgi is loaded to handle the request on events triggering function
