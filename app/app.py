@@ -65,6 +65,3 @@ def single_game(id):
                 return jsonify(games_list)
 def handler(event, context):
     return serverless_wsgi.handle_request(app, event, context)
-
-#if __name__ == '__main__':
-#    app.run()
