@@ -56,7 +56,7 @@ games_list = [
 
 """
 Flask routing to return OK when uri /health_check is requested
-# Defining a function to return Ok every time /health_check is requested
+#Defining a function to return Ok every time /health_check is requested
 """
 @app.route("/health_check")
 def index():
@@ -70,7 +70,8 @@ If the length value of list games_list is greater than 0
 Use module jsonify to return all the value of the game_list when /games is requested
 return 404 if request methods is not GET and length is not > than 0
 if the request method is POST
-increment the id of the new post value"""
+increment the id of the new post value
+"""
 
 @app.route("/games", methods=['GET', 'POST'])
 def games():
@@ -121,10 +122,12 @@ def single_game(id):
             if game['id'] == id:
                 games_list.pop(index)
                 return jsonify(games_list)
+
 """
 Perform logging after the requests
 Return response in format TimeStamp, remote ip, Request method, scheme , path and code status e.g POST 201 
 """
+
 @app.after_request
 def after_request(response):
    timestamp = strftime('[%Y-%b-%d %H:%M]')
@@ -135,8 +138,9 @@ def after_request(response):
 Define function handler for the lambda to trigger on event
 serverless_wsgi is loaded to handle the request on events triggering function
 """
+
 def handler(event, context):
     return serverless_wsgi.handle_request(app, event, context)
 
-#if __name__ == '__main__':
-#    app.run()
+if __name__ == '__main__':
+    app.run()
