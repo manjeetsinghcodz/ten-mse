@@ -13,6 +13,9 @@ LOGGER.setLevel(logging.DEBUG)
 console_handler = logging.StreamHandler()
 LOGGER.addHandler(console_handler)
 
+"""
+variable app equals declaring a flask instance
+"""
 app = Flask(__name__)
 
 """

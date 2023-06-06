@@ -3,7 +3,7 @@
 name: Flask App Deployment
 
 on:
-  push:  #Trigger the workflow during a push on branch develop and all feat/* branches
+  push:  #Trigger the workflow during a push on branch develop and branches
     branches:
       - develop
      #- 'feat/**'
