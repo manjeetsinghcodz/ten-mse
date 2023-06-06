@@ -135,7 +135,7 @@ def after_request(response):
    return response
 
 """
-Define function handler for the lambda to trigger on event
+Define function handler for the lambda to trigger on events
 serverless_wsgi is loaded to handle the request on events triggering function
 """
 
