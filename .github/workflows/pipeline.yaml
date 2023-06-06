@@ -6,7 +6,7 @@ on:
   push:  #Trigger the workflow during a push on branch develop and all feat/* branches
     branches:
       - develop
-      - 'feat/**'
+     #- 'feat/**'
 env:
    REGISTRY: 976201004822.dkr.ecr.ap-southeast-2.amazonaws.com   #My ECR Registry URL define in ENV to be use during docker command
    REPO: ten-mse # My ECR repo name defined in ENV to be used during docker command

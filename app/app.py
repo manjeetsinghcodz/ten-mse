@@ -28,6 +28,26 @@ games_list = [
         "id": 1,
         "name": "San Andreas",
         "company": "Rockstar Games",
+    },
+    {
+        "id": 3,
+        "name": "Max Payne",
+        "company": "Rockstar Games",
+    },
+    {
+        "id": 4,
+        "name": "Mortal Kombat",
+        "company": "Sony",
+    },
+    {
+        "id": 5,
+        "name": "Grand Turismo",
+        "company": "Sony",
+    },
+    {
+        "id": 6,
+        "name": "Crisis Warhead",
+        "company": "Rockstar Games",
     }
 ]
 
@@ -100,7 +120,7 @@ def single_game(id):
                 return jsonify(games_list)
 """
 Perform logging after the requests
-Return reponse in format TimeStamp, remote ip, Request method, scheme , path and code status e.g POST 201 
+Return response in format TimeStamp, remote ip, Request method, scheme , path and code status e.g POST 201 
 """
 @app.after_request
 def after_request(response):
