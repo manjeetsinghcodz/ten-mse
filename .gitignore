@@ -1,9 +1,5 @@
 ###Ignore the files below
-db.py
-games.sqlite
 __pycache__
-request.py
-sqlite.py
 .idea
 .git
 .github/workflows/python-app.yaml
