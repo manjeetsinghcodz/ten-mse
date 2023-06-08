@@ -142,5 +142,5 @@ serverless_wsgi is loaded to handle the request on events triggering function
 def handler(event, context):
     return serverless_wsgi.handle_request(app, event, context)
 
-if __name__ == '__main__':
-    app.run()
+#if __name__ == '__main__':
+#    app.run()
